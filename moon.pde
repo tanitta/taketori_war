@@ -9,10 +9,7 @@ class Moon implements Entity{
   void update(){}
 
   void draw(){
-    pushMatrix();
-      translate(_x, _y);
     _animation.draw();
-    popMatrix();
   }
 
   int width(){return _animation.width();};

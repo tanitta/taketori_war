@@ -5,7 +5,7 @@ class Usagi implements Entity{
     _beamAnimation = new Animation("beam", 2);
     _x = 100f;
     _y = 600f;
-    
+
     _isBeaming = true;
   }
 
@@ -15,16 +15,13 @@ class Usagi implements Entity{
     }
   }
   void draw(){
-    pushMatrix();
-      translate(_x, _y);
-      _usagiAnimation.draw();
-      if(_isBeaming){
-        drawBeam();
-      }
-    popMatrix();
-    
+    _usagiAnimation.draw();
+    if(_isBeaming){
+      drawBeam();
+    }
+
   }
-  
+
   void drawBeam(){
     pushMatrix();
     translate(0, _beamAnimation.height());
@@ -33,7 +30,7 @@ class Usagi implements Entity{
   };
 
   boolean shouldDie(){return _shouldDie;};
-  
+
   int width(){return _usagiAnimation.width();};
   int height(){return _usagiAnimation.height() + _beamAnimation.height();};
 
@@ -43,7 +40,7 @@ class Usagi implements Entity{
   private boolean _shouldDie = false;
   private Animation _usagiAnimation;
   private Animation _beamAnimation;
-  
+
   private float _x;
   private float _y;
   private boolean _isBeaming = false;
