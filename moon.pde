@@ -1,4 +1,5 @@
 class Moon implements Entity{
+  EntityTypes type(){return EntityTypes.Moon;}
   Moon(){
     _animation = new Animation("moon");
     _x = 100f;

@@ -1,4 +1,5 @@
 class Usagi implements Entity{
+  EntityTypes type(){return EntityTypes.Usagi;}
   Usagi(){
     _usagiAnimation = new Animation("usagi");
     _beamAnimation = new Animation("beam", 2);

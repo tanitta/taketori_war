@@ -1,4 +1,5 @@
 class Earth implements Entity{
+  EntityTypes type(){return EntityTypes.Earth;}
   Earth(){
     _animation = new Animation("earth");
     _x = 100f;

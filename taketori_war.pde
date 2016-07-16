@@ -1,17 +1,6 @@
-interface Entity{
-  void update();
-  void draw();
-  boolean shouldDie();
-  // void shouldDie(boolean b);
-
-  int width();
-  int height();
-
-  float x();
-  float y();
-}
-
 class Player implements Entity{
+  EntityTypes type(){return EntityTypes.Player;}
+  
   void update(){}
   void draw(){}
   boolean shouldDie(){return false;/*immotal*/};
@@ -24,6 +13,8 @@ class Player implements Entity{
 }
 
 class Takeyari implements Entity{
+  EntityTypes type(){return EntityTypes.Takeyari;}
+  
   void update(){}
   void draw(){}
   boolean shouldDie(){return _shouldDie;};
