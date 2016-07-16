@@ -28,10 +28,18 @@ class Takeyari implements Entity{
   private boolean _shouldDie = false;
 }
 
+enum GameStatus{
+  Opning, 
+  Playing, 
+  Gameover, 
+}
+
 class Game{
   Game(){}
 
   void setup(){
+    _state = GameStatus.Opning;
+    
     _moon   = new Moon();
     _earth  = new Earth();
     _player = new Player();
@@ -53,15 +61,14 @@ class Game{
     
     drawEntities();
   }
+  
   private void drawEarth(){}
+  
   private void drawSpace(){}
 
-  private void updateEntities(){
+  private void updateEntities(){}
 
-  }
-
-  private void drawEntities(){
-  }
+  private void drawEntities(){}
 
   private Entity[] _entities;
   private Player _player;
@@ -69,6 +76,7 @@ class Game{
   private Earth _earth;
   
   private Usagi _usagi;
+  private GameStatus _state;
 }
 
 Game game = new Game();
