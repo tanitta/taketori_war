@@ -11,20 +11,6 @@ interface Entity{
   float y();
 }
 
-class Usagi implements Entity{
-  int width(){return 32;};
-  int height(){return 32;};
-
-  float x(){ return 0f; };
-  float y(){ return 0f; };
-
-  void update(){}
-  void draw(){}
-  boolean shouldDie(){return _shouldDie;};
-
-  private boolean _shouldDie = false;
-}
-
 class Player implements Entity{
   void update(){}
   void draw(){}
@@ -58,9 +44,12 @@ class Game{
     _moon   = new Moon();
     _earth  = new Earth();
     _player = new Player();
+    _usagi= new Usagi();
   };
 
   void update(){
+    _usagi.update();
+    
     updateEntities();
   }
 
@@ -69,6 +58,7 @@ class Game{
     
     _moon.draw();
     _earth.draw();
+    _usagi.draw();
     
     drawEntities();
   }
@@ -86,6 +76,8 @@ class Game{
   private Player _player;
   private Moon _moon;
   private Earth _earth;
+  
+  private Usagi _usagi;
 }
 
 Game game = new Game();

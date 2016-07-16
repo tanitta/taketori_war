@@ -12,16 +12,21 @@ class Animation{
 		if(count == 1){
 			String filename = imagePrefix + ".png";
 			_images[0] = loadImage(filename);
+        println("loaded : " + filename);
 		}else{
 			for (int i = 0; i < _maxImages; i++) {
-				String filename = imagePrefix + "_" + nf(i, 4) + ".png";
+				String filename = imagePrefix + nf(i+1) + ".png";
 				_images[i] = loadImage(filename);
+        println("loaded : " + filename);
 			}
 		}
 		_width = _images[0].width;
 		_height = _images[0].height;
 	}
 
+  int maxImages(){
+    return _maxImages;
+  }
 
 	void draw(){
 		draw(0);
