@@ -12,10 +12,8 @@ class Animation{
 		if(count == 1){
 			String filename = imagePrefix + ".png";
 			_images[0] = loadImage(filename);
-			println("loaded : "+filename);
 		}else{
 			for (int i = 0; i < _maxImages; i++) {
-				// Use nf() to number format 'i' into four digits
 				String filename = imagePrefix + "_" + nf(i, 4) + ".png";
 				_images[i] = loadImage(filename);
 			}
