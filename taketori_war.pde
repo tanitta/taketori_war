@@ -56,6 +56,7 @@ class Game{
 
   void setup(){
     _moon   = new Moon();
+    _earth  = new Earth();
     _player = new Player();
   };
 
@@ -65,12 +66,14 @@ class Game{
 
   void draw(){
     background(0x1B2632);
+    
     _moon.draw();
+    _earth.draw();
+    
     drawEntities();
   }
   private void drawEarth(){}
   private void drawSpace(){}
-  // private void drawMoon(){}
 
   private void updateEntities(){
 
@@ -82,6 +85,7 @@ class Game{
   private Entity[] _entities;
   private Player _player;
   private Moon _moon;
+  private Earth _earth;
 }
 
 Game game = new Game();
