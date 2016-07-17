@@ -89,7 +89,7 @@ class Game{
 Game game = new Game();
 
 void setup(){
-  size(480, 320);
+  size(480, 700);
   surface.setResizable(true);
   game.setup();
 }
