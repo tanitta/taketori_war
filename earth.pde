@@ -14,7 +14,7 @@ class Earth implements Entity{
   void draw(){
     _animation.draw();
   }
-
+  
   int width(){return _animation.width();};
 
   int height(){return _animation.height();};
@@ -24,6 +24,9 @@ class Earth implements Entity{
   float y(){ return _y; };
 
   boolean shouldDie(){return false;/*immotal*/};
+  
+  float mass(){return 100000f;};
+  
   private Animation _animation;
   
   private float _x;

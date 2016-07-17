@@ -18,9 +18,9 @@ class Usagi implements Entity{
     if(_isBeaming){
       _beamFrame = (_beamFrame + 0.1)%_beamAnimation.maxImages();
     }
-    _motionCounter += 0.02;
+    _motionCounter += 0.01;
     _x = _x + sin(_motionCounter)*(_motionCounter*0.1+1.0);
-    _y = _y + 0.2f + cos(_motionCounter*2.0)*1.0;
+    _y = _y + 0.1f + cos(_motionCounter*2.0)*1.0;
     
     if(_y > 700f){
       _shouldDie = true;
@@ -35,10 +35,11 @@ class Usagi implements Entity{
   }
   
   void callCollidingEvent(EntityTypes type){
-    println(type);
-    // if(type == EntityTypes.Usagi){
-    //   println("detect : Usagi");
-    // }
+    // println(type);
+    if(type == EntityTypes.Takeyari){
+      // println("detect : Usagi");
+      _shouldDie = true;
+    }
   };
 
   void drawBeam(){

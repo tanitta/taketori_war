@@ -1,21 +1,3 @@
-class Takeyari implements Entity{
-  EntityTypes type(){return EntityTypes.Takeyari;}
-  
-  void callCollidingEvent(EntityTypes type){};
-
-  void update(){}
-  void draw(){}
-  boolean shouldDie(){return _shouldDie;};
-
-  int width(){return 32;};
-  int height(){return 96;};
-
-  float x(){ return 0f; };
-  float y(){ return 0f; };
-
-  private boolean _shouldDie = false;
-}
-
 enum GameStatus{
   Opning, 
   Playing, 
@@ -52,6 +34,16 @@ class Game{
     drawPlaying();
     popMatrix();
   }
+  
+  void mousePressed(){
+    
+    float radius = _earth.height()/2 + _player.height()/2;
+    _entities.add(new Takeyari(
+          _earth, _moon,
+          new PVector(_earth.x()+sin(_player.angle())*radius, _earth.y()-cos(_player.angle())*radius), 
+          new PVector(mouseX-width/2, mouseY)
+          ));
+  };
 
   private void drawPlaying(){
     pushMatrix();
@@ -85,7 +77,7 @@ class Game{
 
   private void updateEntities(){
     removeEntities();
-    if(random(30)>29 && random(10)>5){
+    if(random(30)>29 && random(10)>8){
       _entities.add(new Usagi(_moon.x()+random(-32f, 32f), _moon.y()+random(-32f, 32f)));
     }
     
@@ -137,4 +129,7 @@ void setup(){
 void draw(){
   game.update();
   game.draw();
+}
+void mousePressed() {
+  game.mousePressed();
 }

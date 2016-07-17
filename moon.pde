@@ -24,8 +24,12 @@ class Moon implements Entity{
   float y(){ return _y; };
 
   boolean shouldDie(){return false;/*immotal*/};
+  
+  float mass(){return 70000f;};
+  
   private Animation _animation;
   
   private float _x;
+  
   private float _y;
 }
