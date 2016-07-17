@@ -63,7 +63,11 @@ class Game{
       translate(_earth.x(), _earth.y());
       _earth.draw();
       float radius = _earth.height()/2 + _player.height()/2;
-      _player.angle( _player.angle()+0.01f, radius);
+      if(keyPressed && key=='a'){
+        _player.angle( _player.angle()-0.03f, radius);
+      }else if(keyPressed && key=='d'){
+        _player.angle( _player.angle()+0.03f, radius);
+      }
       pushMatrix();
         rotate(_player.angle());
         translate(0f, -radius);
@@ -81,7 +85,7 @@ class Game{
 
   private void updateEntities(){
     removeEntities();
-    if(random(30)>29 && random(10)>9){
+    if(random(30)>29 && random(10)>5){
       _entities.add(new Usagi(_moon.x()+random(-32f, 32f), _moon.y()+random(-32f, 32f)));
     }
     

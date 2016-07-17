@@ -6,7 +6,7 @@ class Earth implements Entity{
   Earth(){
     _animation = new Animation("earth");
     _x = 0f;
-    _y = 600f;
+    _y = 700f;
   }
 
   void update(){}
