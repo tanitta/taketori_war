@@ -1,17 +1,29 @@
 class Usagi implements Entity{
   EntityTypes type(){return EntityTypes.Usagi;}
-  Usagi(){
+  
+  Usagi(float x, float y){
     _usagiAnimation = new Animation("usagi");
     _beamAnimation = new Animation("beam", 2);
-    _x = 100f;
-    _y = 600f;
+    _x = x;
+    _y = y;
 
-    _isBeaming = true;
+    _isBeaming = false;
+  }
+  
+  Usagi(){
+    this(100f, 600f);
   }
 
   void update(){
     if(_isBeaming){
       _beamFrame = (_beamFrame + 0.1)%_beamAnimation.maxImages();
+    }
+    _motionCounter += 0.02;
+    _x = _x + sin(_motionCounter)*(_motionCounter*0.1+1.0);
+    _y = _y + 0.2f + cos(_motionCounter*2.0)*1.0;
+    
+    if(_y > 700f){
+      _shouldDie = true;
     }
   }
   void draw(){
@@ -21,6 +33,13 @@ class Usagi implements Entity{
     }
 
   }
+  
+  void callCollidingEvent(EntityTypes type){
+    println(type);
+    // if(type == EntityTypes.Usagi){
+    //   println("detect : Usagi");
+    // }
+  };
 
   void drawBeam(){
     pushMatrix();
@@ -32,7 +51,7 @@ class Usagi implements Entity{
   boolean shouldDie(){return _shouldDie;};
 
   int width(){return _usagiAnimation.width();};
-  int height(){return _usagiAnimation.height() + _beamAnimation.height();};
+  int height(){return _usagiAnimation.height();};
 
   float x(){ return _x; };
   float y(){ return _y; };
@@ -45,4 +64,6 @@ class Usagi implements Entity{
   private float _y;
   private boolean _isBeaming = false;
   private float _beamFrame = 0f;
+  
+  private float _motionCounter = 0f;
 }

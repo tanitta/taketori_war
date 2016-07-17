@@ -1,9 +1,12 @@
 class Earth implements Entity{
   EntityTypes type(){return EntityTypes.Earth;}
+  
+  void callCollidingEvent(EntityTypes type){};
+  
   Earth(){
     _animation = new Animation("earth");
-    _x = 100f;
-    _y = 500f;
+    _x = 0f;
+    _y = 600f;
   }
 
   void update(){}

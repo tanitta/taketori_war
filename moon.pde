@@ -1,9 +1,10 @@
 class Moon implements Entity{
   EntityTypes type(){return EntityTypes.Moon;}
+  
   Moon(){
     _animation = new Animation("moon");
-    _x = 100f;
-    _y = 100f;
+    _x = 0f;
+    _y = 150f;
   }
 
   void update(){}
@@ -11,6 +12,8 @@ class Moon implements Entity{
   void draw(){
     _animation.draw();
   }
+  
+  void callCollidingEvent(EntityTypes type){};
 
   int width(){return _animation.width();};
 

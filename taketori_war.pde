@@ -1,5 +1,7 @@
 class Takeyari implements Entity{
   EntityTypes type(){return EntityTypes.Takeyari;}
+  
+  void callCollidingEvent(EntityTypes type){};
 
   void update(){}
   void draw(){}
@@ -25,22 +27,30 @@ class Game{
 
   void setup(){
     _state = GameStatus.Opning;
+    
+    _collisionDetector = new CollisionDetector();
 
     _moon   = new Moon();
     _earth  = new Earth();
     _player = new Player();
-    _usagi= new Usagi();
+    // _usagi= new Usagi();
+    
+    _entities.add(new Usagi(_moon.x()+random(-32f, 32f), _moon.y()+random(-32f, 32f)));
+    // _entities.add(new Usagi(_moon.x(), _moon.y()-100f));
+    // _entities.add(_moon.x(), _moon.y()-100f);
+    _entities.add(_moon);
   };
 
   void update(){
-    _usagi.update();
-
     updateEntities();
   }
   void draw(){
     background(0x1B2632);
     
+    pushMatrix();
+    translate(width/2, 0);
     drawPlaying();
+    popMatrix();
   }
 
   private void drawPlaying(){
@@ -61,10 +71,6 @@ class Game{
       popMatrix();
     popMatrix();
 
-    pushMatrix();
-    translate(_usagi.x(), _usagi.y());
-    _usagi.draw();
-    popMatrix();
 
     drawEntities();
   }
@@ -73,16 +79,46 @@ class Game{
 
   private void drawSpace(){}
 
-  private void updateEntities(){}
+  private void updateEntities(){
+    removeEntities();
+    if(random(30)>29 && random(10)>9){
+      _entities.add(new Usagi(_moon.x()+random(-32f, 32f), _moon.y()+random(-32f, 32f)));
+    }
+    
+    for(Entity entity: _entities){
+      entity.update();
+    }
+    
+    _collisionDetector.update(_entities);
+  }
+  
+  private void removeEntities(){
+    // _entities.removeIf(p -> p.shouldDie());
+    List<Entity> newList = new ArrayList<Entity>();
+    for(Entity entity: _entities){
+      if(!entity.shouldDie()){
+        newList.add(entity);
+      }
+    }
+    _entities = newList;
+  }
 
-  private void drawEntities(){}
+  private void drawEntities(){
+    for(Entity entity: _entities){
+      pushMatrix();
+      translate(int(entity.x()), int(entity.y()));
+      entity.draw();
+      popMatrix();
+    }
+  }
+  
+  private CollisionDetector _collisionDetector;
 
-  private Entity[] _entities;
+  private List<Entity> _entities = new ArrayList<Entity>();
   private Player _player;
   private Moon _moon;
   private Earth _earth;
 
-  private Usagi _usagi;
   private GameStatus _state;
 }
 

@@ -11,4 +11,5 @@ interface Entity{
   float y();
   
   EntityTypes type();
+  void callCollidingEvent(EntityTypes type);
 }

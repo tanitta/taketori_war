@@ -1,6 +1,8 @@
 class Player implements Entity{
   EntityTypes type(){return EntityTypes.Player;}
   
+  void callCollidingEvent(EntityTypes type){};
+  
   Player(){
     _animation = new Animation("player", 3);
   }
