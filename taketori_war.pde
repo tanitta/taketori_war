@@ -73,7 +73,9 @@ class Game{
   
   
   void updatePlaying(){
+    updatePlayer();
     updateEntities();
+    updateEffects();
     _level += 0.0005;
     if(_princesses == 0){
       _state = GameStatus.Gameover;
@@ -104,6 +106,26 @@ class Game{
     popMatrix();
   }
   
+  private void updatePlayer(){
+    float radius = _earth.height()/2 + _player.height()/2;
+    if(keyPressed && key=='a'){
+      _player.angle(_player.angle()-0.03);
+    }
+    if(keyPressed && key=='d'){
+      _player.angle(_player.angle()+0.03);
+    }
+  }
+  
+  private void drawEffects(){
+    for(Effect effect: _effects){
+      pushMatrix();
+      // translate(int(effect.x()), int(effect.y()));
+      translate(int(effect.x()), int(effect.y()));
+      effect.draw();
+      popMatrix();
+    }
+  }
+  
   private void drawPlaying(){
     pushMatrix();
     translate(_moon.x(), _moon.y());
@@ -114,17 +136,9 @@ class Game{
       translate(_earth.x(), _earth.y());
       _earth.draw();
     popMatrix();
-    
-    float radius = _earth.height()/2 + _player.height()/2;
-    
-    if(keyPressed && key=='a'){
-      _player.angle(_player.angle()-0.03);
-    }
-    if(keyPressed && key=='d'){
-      _player.angle(_player.angle()+0.03);
-    }
 
     drawEntities();
+    drawEffects();
   }
 
   private void drawEarth(){}
@@ -191,6 +205,13 @@ class Game{
     _collisionDetector.update(_entities);
   }
   
+  private void updateEffects(){
+    removeEffects();
+    for(Effect effect: _effects){
+      effect.update();
+    }
+  }
+  
   private void removeEntities(){
     List<Entity> newList = new ArrayList<Entity>();
     for(Entity entity: _entities){
@@ -198,9 +219,25 @@ class Game{
       
       if(!entity.shouldDie()){
         newList.add(entity);
+      }else{
+        if(entity.type() == EntityTypes.Usagi){
+          _effects.add(new Bomb(new PVector(entity.x(), entity.y())));
+        }
       }
     }
     _entities = newList;
+  }
+  
+  private void removeEffects(){
+    List<Effect> newList = new ArrayList<Effect>();
+    for(Effect effect: _effects){
+      //
+      
+      if(!effect.shouldDie()){
+        newList.add(effect);
+      }
+    }
+    _effects = newList;
   }
 
   private void drawEntities(){
@@ -225,6 +262,7 @@ class Game{
   private CollisionDetector _collisionDetector;
 
   private List<Entity> _entities = new ArrayList<Entity>();
+  private List<Effect> _effects = new ArrayList<Effect>();
   private Player _player;
   private Moon _moon;
   private Earth _earth;
