@@ -78,9 +78,9 @@ class Takeyari implements Entity{
   
   boolean shouldDie(){return _shouldDie;};
 
-  int width(){return _animation.width()/2;};
+  int width(){return _animation.width();};
 
-  int height(){return _animation.width()/2;};
+  int height(){return _animation.width();};
 
   float x(){ return _position.x; };
 

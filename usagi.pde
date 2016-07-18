@@ -8,6 +8,7 @@ class Usagi implements Entity{
     _y = y;
 
     _isBeaming = false;
+    _motionCounter = random(0f, 3f);
   }
   
   Usagi(){
@@ -20,7 +21,7 @@ class Usagi implements Entity{
     }
     _motionCounter += 0.01;
     _x = _x + sin(_motionCounter)*(_motionCounter*0.1+1.0);
-    _y = _y + 0.1f + cos(_motionCounter*2.0)*1.0;
+    _y = _y + 0.1f*(1f + game.level()) + cos(_motionCounter*2.0)*1.0;
     
     if(_y > 800f){
       _shouldDie = true;

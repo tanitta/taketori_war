@@ -1,5 +1,5 @@
 enum GameStatus{
-  Opning, 
+  Opening, 
   Playing, 
   Gameover, 
 }
@@ -8,7 +8,8 @@ class Game{
   Game(){}
 
   void setup(){
-    _state = GameStatus.Playing;
+    _state = GameStatus.Opening;
+    _openingAnimation = new Animation("opening");
     
     _collisionDetector = new CollisionDetector();
 
@@ -39,11 +40,26 @@ class Game{
     
     pushMatrix();
     translate(width/2, 0);
-    drawPlaying();
+    if(_state == GameStatus.Opening){
+      drawOpening();
+    }
+    
+    if(_state == GameStatus.Playing){
+      drawPlaying();
+    }
     popMatrix();
   }
   
   void mousePressed(){
+    if(_state == GameStatus.Playing){
+      launchTakeyari();
+    }
+    if(_state == GameStatus.Opening){
+      _state = GameStatus.Playing;
+    }
+  };
+  
+  private void launchTakeyari(){
     if(_takeyariRemaining > 0) {
       float radius = _earth.height()/2 + _player.height()/2;
       _entities.add(new Takeyari(
@@ -53,10 +69,12 @@ class Game{
             ));
       _takeyariRemaining--;
     }
-  };
+  }
+  
   
   void updatePlaying(){
     updateEntities();
+    _level += 0.0005;
     if(_princesses == 0){
       _state = GameStatus.Gameover;
     }
@@ -67,13 +85,25 @@ class Game{
   };
   
   void addBonusTake(){
-    _bonusSpawningTake++;
+    _bonusSpawningTake+=2;
   };
   
   void addBonusPrincess(){
     _bonusSpawningPrincess++;
   };
+  
+  float level(){
+    return _level;
+  }
 
+  void drawOpening(){
+    
+    pushMatrix();
+    translate(0, height/2);
+    _openingAnimation.draw();
+    popMatrix();
+  }
+  
   private void drawPlaying(){
     pushMatrix();
     translate(_moon.x(), _moon.y());
@@ -93,13 +123,6 @@ class Game{
     if(keyPressed && key=='d'){
       _player.angle(_player.angle()+0.03);
     }
-    
-    // pushMatrix();
-    // translate(0f, -radius);
-    // rotate(_player.angle());
-    // _player.draw();
-    // popMatrix();
-
 
     drawEntities();
   }
@@ -142,7 +165,9 @@ class Game{
     removeEntities();
     
     if(random(30)>29 && random(10)>8){
-      _entities.add(new Usagi(_moon.x()+random(-32f, 32f), _moon.y()+random(-32f, 32f)));
+      for(int i = 0; i < 1+(int)_level; i++){
+        _entities.add(new Usagi(_moon.x()+random(-32f, 32f), _moon.y()+random(-32f, 32f)));
+      }
     }
     
     for(int i = 0; i < _bonusSpawningTake; i++){
@@ -211,6 +236,9 @@ class Game{
   private int _bonusSpawningPrincess = 0;
   
   private int _princesses = 0;
+  private float _level = 0;
+  
+  private Animation _openingAnimation;
 }
 
 Game game = new Game();
