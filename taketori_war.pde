@@ -27,6 +27,15 @@ class Game{
     _takeyariRemaining = 10;
     
     spawnPrincess(0f);
+    
+    _vibratorX = new Vibrator();
+    _vibratorX.mass = 0.01f;
+    _vibratorX.spring = 20f;
+    _vibratorX.damper= 0.02f;
+    _vibratorY = new Vibrator();
+    _vibratorY.mass = 0.01f;
+    _vibratorY.spring = 20f;
+    _vibratorY.damper= 0.02f;
   };
 
   void update(){
@@ -40,6 +49,7 @@ class Game{
     
     pushMatrix();
     translate(width/2, 0);
+    translate(_vibratorX.x, _vibratorY.x);
     if(_state == GameStatus.Opening){
       drawOpening();
     }
@@ -68,6 +78,7 @@ class Game{
             new PVector(mouseX-width/2, mouseY)
             ));
       _takeyariRemaining--;
+      addVibration(PVector.mult(PVector.random2D().normalize(), 20f));
     }
   }
   
@@ -80,6 +91,8 @@ class Game{
     if(_princesses == 0){
       _state = GameStatus.Gameover;
     }
+    _vibratorX.update();
+    _vibratorY.update();
   }
   
   void addTakeyariRemaining(){
@@ -97,9 +110,13 @@ class Game{
   float level(){
     return _level;
   }
+  
+  void addVibration(PVector f){
+    _vibratorX.addForce(f.x);
+    _vibratorY.addForce(f.y);
+  }
 
   void drawOpening(){
-    
     pushMatrix();
     translate(0, height/2);
     _openingAnimation.draw();
@@ -116,15 +133,6 @@ class Game{
     }
   }
   
-  private void drawEffects(){
-    for(Effect effect: _effects){
-      pushMatrix();
-      // translate(int(effect.x()), int(effect.y()));
-      translate(int(effect.x()), int(effect.y()));
-      effect.draw();
-      popMatrix();
-    }
-  }
   
   private void drawPlaying(){
     pushMatrix();
@@ -140,10 +148,16 @@ class Game{
     drawEntities();
     drawEffects();
   }
-
-  private void drawEarth(){}
-
-  private void drawSpace(){}
+  
+  private void drawEffects(){
+    for(Effect effect: _effects){
+      pushMatrix();
+      // translate(int(effect.x()), int(effect.y()));
+      translate(int(effect.x()), int(effect.y()));
+      effect.draw();
+      popMatrix();
+    }
+  }
 
   private void spawnTake(){
       float angle = random(-2f, 2f);
@@ -222,6 +236,7 @@ class Game{
       }else{
         if(entity.type() == EntityTypes.Usagi){
           _effects.add(new Bomb(new PVector(entity.x(), entity.y())));
+          addVibration(PVector.mult(PVector.random2D().normalize(), 80f));
         }
       }
     }
@@ -260,7 +275,6 @@ class Game{
   }
   
   private CollisionDetector _collisionDetector;
-
   private List<Entity> _entities = new ArrayList<Entity>();
   private List<Effect> _effects = new ArrayList<Effect>();
   private Player _player;
@@ -275,8 +289,11 @@ class Game{
   
   private int _princesses = 0;
   private float _level = 0;
-  
+
   private Animation _openingAnimation;
+  
+  private Vibrator _vibratorX;
+  private Vibrator _vibratorY;
 }
 
 Game game = new Game();
