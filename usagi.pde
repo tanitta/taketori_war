@@ -22,7 +22,7 @@ class Usagi implements Entity{
     _x = _x + sin(_motionCounter)*(_motionCounter*0.1+1.0);
     _y = _y + 0.1f + cos(_motionCounter*2.0)*1.0;
     
-    if(_y > 700f){
+    if(_y > 800f){
       _shouldDie = true;
     }
   }
@@ -39,6 +39,10 @@ class Usagi implements Entity{
     if(type == EntityTypes.Takeyari){
       // println("detect : Usagi");
       _shouldDie = true;
+      
+      if(_shouldDie &&_y <= 800f){
+        game.addBonusTake();
+      }
     }
   };
 

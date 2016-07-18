@@ -4,4 +4,6 @@ enum EntityTypes{
   Usagi, 
   Earth, 
   Moon, 
+  Bamboo, 
+  Princess 
 }

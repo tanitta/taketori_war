@@ -15,7 +15,7 @@ class Takeyari implements Entity{
     _moonMass = m.mass();
     
     _position = from;
-    _velocity = to.sub(from).limit(110);
+    _velocity = PVector.mult(to.sub(from), 0.8f).limit(110);
     
     _animation = new Animation("takeyari");
   }
@@ -25,7 +25,7 @@ class Takeyari implements Entity{
       _shouldDie = true;
     }
 
-    if(PVector.dist(_earthPosition, _position) < 64f){
+    if(PVector.dist(_earthPosition, _position) < 32f){
       _shouldDie = true;
     }
     
@@ -38,10 +38,10 @@ class Takeyari implements Entity{
       addForce(PVector.mult(direct, 19));
     }
     
-    if(_age > 92 && _age < 122){
+    if(_age > 92 && _age < 102){
       PVector direct = _velocity.copy();
       direct.normalize();
-      addForce(PVector.mult(direct, 4));
+      addForce(PVector.mult(direct, 15));
     }
     
     if(_age > 500){
