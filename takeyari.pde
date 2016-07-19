@@ -3,7 +3,6 @@ class Takeyari implements Entity{
   
   void callCollidingEvent(EntityTypes type){
     if(type == EntityTypes.Usagi){
-      // println("detect : Usagi");
       _shouldDie = true;
     }
   };
@@ -30,7 +29,6 @@ class Takeyari implements Entity{
     }
     
     _age = _age + 1f;
-    println(_age);
     if(_age < 10){
       PVector direct = _velocity.copy();
       direct.normalize();

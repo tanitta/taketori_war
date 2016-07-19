@@ -36,6 +36,9 @@ class Game{
     _vibratorY.mass = 0.01f;
     _vibratorY.spring = 20f;
     _vibratorY.damper= 0.02f;
+    
+    //sound
+    // resources.play("opening.mp3");
   };
 
   void update(){
@@ -56,6 +59,10 @@ class Game{
     
     if(_state == GameStatus.Playing){
       drawPlaying();
+    }
+    
+    if(_state == GameStatus.Gameover){
+      drawGameover();
     }
     popMatrix();
   }
@@ -96,11 +103,11 @@ class Game{
   }
   
   void addTakeyariRemaining(){
-    _takeyariRemaining++;
+    _takeyariRemaining+=2;
   };
   
   void addBonusTake(){
-    _bonusSpawningTake+=2;
+    _bonusSpawningTake+=1;
   };
   
   void addBonusPrincess(){
@@ -120,6 +127,12 @@ class Game{
     pushMatrix();
     translate(0, height/2);
     _openingAnimation.draw();
+    popMatrix();
+  }
+  void drawGameover(){
+    pushMatrix();
+    translate(0, height/2);
+    resources.draw("gameover.png");
     popMatrix();
   }
   
@@ -256,6 +269,7 @@ class Game{
   }
 
   private void drawEntities(){
+    Collections.reverse(_entities);
     for(Entity entity: _entities){
       pushMatrix();
       translate(int(entity.x()), int(entity.y()));
@@ -272,6 +286,7 @@ class Game{
       entity.draw();
       popMatrix();
     }
+    Collections.reverse(_entities);
   }
   
   private CollisionDetector _collisionDetector;
@@ -296,11 +311,22 @@ class Game{
   private Vibrator _vibratorY;
 }
 
+Resources resources = new Resources();
 Game game = new Game();
 
+// import ddf.minim.*;
+// AudioPlayer test;
+// Minim minim;
 void setup(){
   size(900, 900);
   // surface.setResizable(true);
+  // resources.minim = new Minim(this);
+  // minim = new Minim(this);
+  // test = minim.loadFile("test.wav");
+  
+  // test.play();
+  
+  
   game.setup();
 }
 
@@ -310,4 +336,11 @@ void draw(){
 }
 void mousePressed() {
   game.mousePressed();
+}
+void stop()
+{
+  // test.close();
+  // minim.stop();
+  //
+  // super.stop();
 }
