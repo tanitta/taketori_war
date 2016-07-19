@@ -133,7 +133,7 @@ class Game{
     updatePlayer();
     updateEntities();
     updateEffects();
-    _level += 0.001;
+    _level += 0.002;
     if(_princesses == 0){
       _state = GameStatus.Gameover;
     }
@@ -177,11 +177,12 @@ class Game{
   
   private void updatePlayer(){
     float radius = _earth.height()/2 + _player.height()/2;
+    float walkingSpeed = 0.05;
     if(keyPressed && key=='a'){
-      _player.angle(_player.angle()-0.03);
+      _player.angle(_player.angle()-walkingSpeed);
     }
     if(keyPressed && key=='d'){
-      _player.angle(_player.angle()+0.03);
+      _player.angle(_player.angle()+walkingSpeed);
     }
   }
   
@@ -212,7 +213,7 @@ class Game{
   }
 
   private void spawnTake(){
-      float angle = random(-2f, 2f);
+      float angle = random(-PI, PI);
       float radius = _earth.height()/2 + 16;
       _entities.add(new Bamboo(new PVector(_earth.x()+sin(angle)*radius, _earth.y()-cos(angle)*radius)));
   }

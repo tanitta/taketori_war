@@ -28,16 +28,32 @@ class Bamboo implements Entity{
         _isLighting = true;
       }
     }
+    
+    if(_age > 600){
+      _shouldDie = true;
+    }
   }
 
   void draw(){
-    if(_isLighting){
-      _animation_light.draw(int(_age*0.1)%8);
-    }else{
-      if(_age < 200){
-        _animation.draw(0);
+    if(_age<600-120){
+      if(_isLighting){
+        _animation_light.draw(int(_age*0.1)%8);
       }else{
-        _animation.draw(1);
+        if(_age < 200){
+          _animation.draw(0);
+        }else{
+          _animation.draw(1);
+        }
+      }
+    }else if(_age%10 <= 5){
+      if(_isLighting){
+        _animation_light.draw(int(_age*0.1)%8);
+      }else{
+        if(_age < 200){
+          _animation.draw(0);
+        }else{
+          _animation.draw(1);
+        }
       }
     }
   }
