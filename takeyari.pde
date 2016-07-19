@@ -3,7 +3,10 @@ class Takeyari implements Entity{
   
   void callCollidingEvent(EntityTypes type){
     if(type == EntityTypes.Usagi){
-      _shouldDie = true;
+      _remainingLife--;
+      if(_remainingLife==0){
+        _shouldDie = true;
+      }
     }
   };
   
@@ -101,4 +104,5 @@ class Takeyari implements Entity{
   private float _age;
 
   private float _deltaT = 1f/30f;
+  private int _remainingLife = 2;
 }

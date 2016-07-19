@@ -11,7 +11,7 @@ class Bomb implements Effect{
     _animation.draw(int(_age));
   };
   
-  void  update(){_age+=0.2f;};
+  void  update(){_age+=0.3f;};
   
   float x(){return _position.x;}
   

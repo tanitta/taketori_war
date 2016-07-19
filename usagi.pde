@@ -40,9 +40,10 @@ class Usagi implements Entity{
     if(type == EntityTypes.Takeyari){
       // println("detect : Usagi");
       _shouldDie = true;
+      game.addScore(100);
       
       if(_shouldDie &&_y <= 800f){
-        if(random(0f, 100f)<50f){
+        if(random(0f, 100f)<30f){
           game.addBonusTake();
         }
       }

@@ -49,7 +49,6 @@ class Game{
   }
   void draw(){
     background(0x1B2632);
-    
     pushMatrix();
     translate(width/2, 0);
     translate(_vibratorX.x, _vibratorY.x);
@@ -59,12 +58,52 @@ class Game{
     
     if(_state == GameStatus.Playing){
       drawPlaying();
+      
+      pushMatrix();
+      // translate(-width/2, 0);
+      drawInfo();
+      popMatrix();
     }
     
     if(_state == GameStatus.Gameover){
       drawGameover();
+      pushMatrix();
+      translate(width/2-16*8, 160);
+      drawScore();
+      popMatrix();
     }
     popMatrix();
+  }
+  private void drawInfo(){
+    drawScore();
+
+    pushMatrix();
+    translate(_earth.x()-8*5, _earth.y()-16);
+    resources.draw("remain.png", 0, 0);
+    translate(16*2, 0);
+    drawNumber(_takeyariRemaining, 3);
+    popMatrix();
+  }
+  
+  private void drawScore(){
+      pushMatrix();
+      translate(-width/2+16, 16);
+      resources.draw("score.png", 0, 0);
+      translate(16*6, 0);
+      drawNumber(_score, 8);
+      popMatrix();
+  }
+  
+  void addScore(int score){
+    _score += score * int(1f+_level);
+  };
+  
+  private void drawNumber(int num, int d){
+    String str = nf(num, d);
+    for(int i = 0; i<d; ++i){
+      int a = Integer.valueOf(str.substring(i, i+1));
+      resources.draw("number"+nf(a+1)+".png", i*16, 0);
+    }
   }
   
   void mousePressed(){
@@ -94,7 +133,7 @@ class Game{
     updatePlayer();
     updateEntities();
     updateEffects();
-    _level += 0.0005;
+    _level += 0.001;
     if(_princesses == 0){
       _state = GameStatus.Gameover;
     }
@@ -309,6 +348,8 @@ class Game{
   
   private Vibrator _vibratorX;
   private Vibrator _vibratorY;
+  
+  private int _score = 0;
 }
 
 Resources resources = new Resources();

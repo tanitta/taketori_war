@@ -13,6 +13,15 @@ class Resources{
     image(_images.get(name), shiftX, shiftX);
   };
   
+  void draw(String name, int x, int y){
+    if(!_images.containsKey(name)){
+      _images.put(name, loadImage(name));
+    }
+    
+    PImage image = _images.get(name);
+    image(_images.get(name), x, y);
+  };
+  
   int width(String name){
     if(!_images.containsKey(name)){
       _images.put(name, loadImage(name));
