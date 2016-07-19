@@ -29,13 +29,13 @@ class Bamboo implements Entity{
       }
     }
     
-    if(_age > 600){
+    if(_age > 500){
       _shouldDie = true;
     }
   }
 
   void draw(){
-    if(_age<600-120){
+    if(_age<500-120){
       if(_isLighting){
         _animation_light.draw(int(_age*0.1)%8);
       }else{

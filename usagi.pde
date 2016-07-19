@@ -43,7 +43,7 @@ class Usagi implements Entity{
       game.addScore(100);
       
       if(_shouldDie &&_y <= 800f){
-        if(random(0f, 100f)<30f){
+        if(random(0f, 100f)<32f){
           game.addBonusTake();
         }
       }

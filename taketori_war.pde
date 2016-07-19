@@ -24,7 +24,7 @@ class Game{
     _entities.add(_moon);
     _entities.add(_player);
     
-    _takeyariRemaining = 10;
+    _takeyariRemaining = 20;
     
     spawnPrincess(0f);
     
@@ -133,7 +133,7 @@ class Game{
     updatePlayer();
     updateEntities();
     updateEffects();
-    _level += 0.002;
+    _level += 0.0015;
     if(_princesses == 0){
       _state = GameStatus.Gameover;
     }
@@ -177,7 +177,7 @@ class Game{
   
   private void updatePlayer(){
     float radius = _earth.height()/2 + _player.height()/2;
-    float walkingSpeed = 0.05;
+    float walkingSpeed = 0.07;
     if(keyPressed && key=='a'){
       _player.angle(_player.angle()-walkingSpeed);
     }
