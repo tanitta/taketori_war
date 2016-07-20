@@ -8,7 +8,7 @@ class Usagi implements Entity{
     _y = y;
 
     _isBeaming = false;
-    _motionCounter = random(0f, 3f);
+    _motionCounter = random(-3000f, 3000f);
   }
   
   Usagi(){
@@ -20,8 +20,14 @@ class Usagi implements Entity{
       _beamFrame = (_beamFrame + 0.1)%_beamAnimation.maxImages();
     }
     _motionCounter += 0.005;
-    _x = _x + sin(_motionCounter*(1f + game.level())*0.5)*(_motionCounter*(1f + game.level())*0.1);
-    _y = _y + 0.1f*(1f + game.level()) + cos(_motionCounter*(1f + game.level())*1.0)*2f;
+    // _x = _x + sin(_motionCounter*1f)*(_motionCounter*(1f + game.level())*0.1);
+    _x = _x + (noise(_motionCounter)-0.5f)*5f;
+    
+    _x = _x + (0-_x)*0.001;
+    _y = _y + (700-_y)*0.001;
+    
+    // _y = _y +l 0.1f*(1f + game.level()) 
+    _y = _y + 0.5f*(1f + game.level()*0.1)+ cos(_motionCounter*5.0)*1f;
     
     if(_y > 800f){
       _shouldDie = true;
@@ -41,9 +47,10 @@ class Usagi implements Entity{
       // println("detect : Usagi");
       _shouldDie = true;
       game.addScore(100);
+      game.addLevel(map(height-_y, 150f, 600f, 0f, 1f)*0.6f/(1f+game.level()));
       
       if(_shouldDie &&_y <= 800f){
-        if(random(0f, 100f)<32f){
+        if(random(0f, 100f)<33f){
           game.addBonusTake();
         }
       }

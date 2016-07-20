@@ -104,5 +104,5 @@ class Takeyari implements Entity{
   private float _age;
 
   private float _deltaT = 1f/30f;
-  private int _remainingLife = 2;
+  private int _remainingLife = 3;
 }

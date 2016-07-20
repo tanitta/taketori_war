@@ -2,7 +2,7 @@ class Bamboo implements Entity{
   EntityTypes type(){return EntityTypes.Bamboo;}
   
   void callCollidingEvent(EntityTypes type){
-    if(type == EntityTypes.Player && _age >= 200){
+    if(type == EntityTypes.Player && _age >= 300){
       _shouldDie = true;
       game.addTakeyariRemaining();
       
@@ -39,7 +39,7 @@ class Bamboo implements Entity{
       if(_isLighting){
         _animation_light.draw(int(_age*0.1)%8);
       }else{
-        if(_age < 200){
+        if(_age < 300){
           _animation.draw(0);
         }else{
           _animation.draw(1);
@@ -49,7 +49,7 @@ class Bamboo implements Entity{
       if(_isLighting){
         _animation_light.draw(int(_age*0.1)%8);
       }else{
-        if(_age < 200){
+        if(_age < 300){
           _animation.draw(0);
         }else{
           _animation.draw(1);

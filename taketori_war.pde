@@ -118,22 +118,26 @@ class Game{
   private void launchTakeyari(){
     if(_takeyariRemaining > 0) {
       float radius = _earth.height()/2 + _player.height()/2;
+      PVector from = new PVector(_earth.x()+sin(_player.angle())*radius, _earth.y()-cos(_player.angle())*radius);
+      PVector to = new PVector(mouseX-width/2, mouseY);
       _entities.add(new Takeyari(
             _earth, _moon,
-            new PVector(_earth.x()+sin(_player.angle())*radius, _earth.y()-cos(_player.angle())*radius), 
-            new PVector(mouseX-width/2, mouseY)
+            from, 
+            to
             ));
       _takeyariRemaining--;
       addVibration(PVector.mult(PVector.random2D().normalize(), 20f));
+      // addVibration(PVector.mult(to.sub(from).normalize(), 100f));
     }
   }
   
   
   void updatePlaying(){
+    _timer++;
     updatePlayer();
     updateEntities();
     updateEffects();
-    _level += 0.0015;
+    _level += 0.00007;
     if(_princesses == 0){
       _state = GameStatus.Gameover;
     }
@@ -188,6 +192,12 @@ class Game{
   
   
   private void drawPlaying(){
+      float radius = _earth.height()/2 + _player.height()/2;
+    PVector from = new PVector(_earth.x()+sin(_player.angle())*radius, _earth.y()-cos(_player.angle())*radius);
+    PVector to = new PVector(mouseX-width/2, mouseY);
+    line(from.x, from.y, to.x, to.y);
+    
+    println(_level);
     pushMatrix();
     translate(_moon.x(), _moon.y());
     _moon.draw();
@@ -218,6 +228,10 @@ class Game{
       _entities.add(new Bamboo(new PVector(_earth.x()+sin(angle)*radius, _earth.y()-cos(angle)*radius)));
   }
   
+  void addLevel(float l){
+    _level += l;
+  }
+  
   void incPrincesses(){
     _princesses++;
   }
@@ -245,7 +259,8 @@ class Game{
   private void updateEntities(){
     removeEntities();
     
-    if(random(30)>29 && random(10)>8){
+    // if(random(30)>29 && random(10)>8){
+    if(_timer%int(30f*20f/(1f+_level*0.25))==0){
       for(int i = 0; i < 1+(int)_level; i++){
         _entities.add(new Usagi(_moon.x()+random(-32f, 32f), _moon.y()+random(-32f, 32f)));
       }
@@ -351,6 +366,7 @@ class Game{
   private Vibrator _vibratorY;
   
   private int _score = 0;
+  private long _timer = 0;
 }
 
 Resources resources = new Resources();
