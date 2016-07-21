@@ -37,6 +37,9 @@ class Game{
     _vibratorY.spring = 20f;
     _vibratorY.damper= 0.02f;
     
+    stroke(255, 0, 0);
+    noFill();
+    strokeWeight(2);
     //sound
     // resources.play("opening.mp3");
   };
@@ -195,9 +198,13 @@ class Game{
       float radius = _earth.height()/2 + _player.height()/2;
     PVector from = new PVector(_earth.x()+sin(_player.angle())*radius, _earth.y()-cos(_player.angle())*radius);
     PVector to = new PVector(mouseX-width/2, mouseY);
-    line(from.x, from.y, to.x, to.y);
     
-    println(_level);
+    PVector v = PVector.mult(to.sub(from), 0.8f).limit(110);
+    line(from.x, from.y, from.x + v.x*0.8f, from.y + v.y*0.8f);
+    v.normalize();
+    ellipse(from.x + v.x*110f*0.8f, from.y + v.y*110f*0.8f, 4, 4);
+    
+    // println(_level);
     pushMatrix();
     translate(_moon.x(), _moon.y());
     _moon.draw();
@@ -260,7 +267,7 @@ class Game{
     removeEntities();
     
     // if(random(30)>29 && random(10)>8){
-    if(_timer%int(30f*20f/(1f+_level*0.25))==0){
+    if(_timer%int(30f*20f/(1f+_level*0.15))==0){
       for(int i = 0; i < 1+(int)_level; i++){
         _entities.add(new Usagi(_moon.x()+random(-32f, 32f), _moon.y()+random(-32f, 32f)));
       }

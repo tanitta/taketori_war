@@ -24,7 +24,7 @@ class Usagi implements Entity{
     _x = _x + (noise(_motionCounter)-0.5f)*5f;
     
     _x = _x + (0-_x)*0.001;
-    _y = _y + (700-_y)*0.001;
+    _y = _y + (700-_y)*0.0008;
     
     // _y = _y +l 0.1f*(1f + game.level()) 
     _y = _y + 0.5f*(1f + game.level()*0.1)+ cos(_motionCounter*5.0)*1f;
@@ -50,8 +50,6 @@ class Usagi implements Entity{
       game.addLevel(map(height-_y, 150f, 600f, 0f, 1f)*0.6f/(1f+game.level()));
       
       if(_shouldDie &&_y <= 800f){
-        if(random(0f, 100f)<33f){
-          game.addBonusTake();
         }
       }
     }
