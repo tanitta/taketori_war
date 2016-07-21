@@ -6,6 +6,7 @@ class Princess implements Entity{
       if(!_shouldDie){
         _shouldDie = true;
         game.decPrincesses();
+        resources.trigger("kidnap.mp3");
       }
     }
   };
