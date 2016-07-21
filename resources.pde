@@ -1,3 +1,5 @@
+  
+import java.util.Map;
 import ddf.minim.*;
 class Resources{
   Minim minim;
@@ -40,11 +42,24 @@ class Resources{
   
   void play(String name){
     if(!_sounds.containsKey(name)){
-      _sounds.put(name, minim.loadSample(name, 2048));
+      _sounds.put(name, minim.loadFile(name, 2048));
     }
-    _sounds.get(name).trigger();
+    _sounds.get(name).loop();
   }
   
+  void close(String name){
+    if(!_sounds.containsKey(name)){
+      _sounds.put(name, minim.loadFile(name, 2048));
+    }
+    _sounds.get(name).close();
+  }
+  
+  void trigger(String name){
+    if(!_samples.containsKey(name)){
+      _samples.put(name, minim.loadSample(name, 2048));
+    }
+    _samples.get(name).trigger();
+  }
   // void play(String name){
   //   if(!_sounds.containsKey(name)){
   //     _sounds.put(name, minim.loadSample(name, 2048));
@@ -52,5 +67,14 @@ class Resources{
   //   _sounds.get(name).play();
   // }
   
-  private HashMap<String, AudioSample> _sounds = new HashMap<String, AudioSample>();
+  private HashMap<String, AudioSample> _samples = new HashMap<String, AudioSample>();
+  private HashMap<String, AudioPlayer> _sounds = new HashMap<String, AudioPlayer>();
+  
+  void close(){
+    for (Map.Entry o : _sounds.entrySet()) {
+      _sounds.get(o.getKey()).close();
+    }
+    
+    minim.stop();
+  }
 }

@@ -3,11 +3,16 @@ class Bamboo implements Entity{
   
   void callCollidingEvent(EntityTypes type){
     if(type == EntityTypes.Player && _age >= 300){
+      
       _shouldDie = true;
       game.addTakeyariRemaining();
       
+      
       if(_isLighting){
         game.addBonusPrincess();
+        resources.trigger("spawn.mp3");
+      }else{
+        resources.trigger("crop.mp3");
       }
     }
     

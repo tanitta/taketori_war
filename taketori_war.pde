@@ -42,6 +42,7 @@ class Game{
     strokeWeight(2);
     //sound
     // resources.play("opening.mp3");
+    resources.play("opening.mp3");
   };
 
   void update(){
@@ -114,7 +115,9 @@ class Game{
       launchTakeyari();
     }
     if(_state == GameStatus.Opening){
+      resources.close("opening.mp3");
       _state = GameStatus.Playing;
+      resources.play("war.mp3");
     }
   };
   
@@ -131,6 +134,9 @@ class Game{
       _takeyariRemaining--;
       addVibration(PVector.mult(PVector.random2D().normalize(), 20f));
       // addVibration(PVector.mult(to.sub(from).normalize(), 100f));
+      resources.trigger("launch.mp3");
+    }else{
+      resources.trigger("noremain.mp3");
     }
   }
   
@@ -311,6 +317,7 @@ class Game{
       }else{
         if(entity.type() == EntityTypes.Usagi){
           _effects.add(new Bomb(new PVector(entity.x(), entity.y())));
+          resources.trigger("bomb.mp3");
           addVibration(PVector.mult(PVector.random2D().normalize(), 80f));
         }
       }
@@ -380,16 +387,13 @@ Resources resources = new Resources();
 Game game = new Game();
 
 // import ddf.minim.*;
-// AudioPlayer test;
+//AudioPlayer test;
 // Minim minim;
 void setup(){
   size(900, 900);
-  // surface.setResizable(true);
-  // resources.minim = new Minim(this);
-  // minim = new Minim(this);
-  // test = minim.loadFile("test.wav");
+  resources.minim = new Minim(this);
   
-  // test.play();
+  //test.play();
   
   
   game.setup();
@@ -404,7 +408,7 @@ void mousePressed() {
 }
 void stop()
 {
-  // test.close();
+  //test.close();
   // minim.stop();
   //
   // super.stop();
