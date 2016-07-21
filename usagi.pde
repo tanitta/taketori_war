@@ -50,6 +50,8 @@ class Usagi implements Entity{
       game.addLevel(map(height-_y, 150f, 600f, 0f, 1f)*0.6f/(1f+game.level()));
       
       if(_shouldDie &&_y <= 800f){
+        if(random(0f, 100f)<33f){		
+          game.addBonusTake();
         }
       }
     }
