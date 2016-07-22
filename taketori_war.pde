@@ -117,7 +117,7 @@ class Game{
     if(_state == GameStatus.Opening){
       resources.close("opening.mp3");
       _state = GameStatus.Playing;
-      resources.play("war.mp3");
+      resources.play("battle.mp3");
     }
   };
   
@@ -386,16 +386,9 @@ class Game{
 Resources resources = new Resources();
 Game game = new Game();
 
-// import ddf.minim.*;
-//AudioPlayer test;
-// Minim minim;
 void setup(){
   size(900, 900);
   resources.minim = new Minim(this);
-  
-  //test.play();
-  
-  
   game.setup();
 }
 
@@ -408,8 +401,5 @@ void mousePressed() {
 }
 void stop()
 {
-  //test.close();
-  // minim.stop();
-  //
-  // super.stop();
+  resources.close();
 }
