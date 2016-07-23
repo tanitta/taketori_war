@@ -8,6 +8,8 @@ class Game{
   Game(){}
 
   void setup(){
+    resources.close("gameover.mp3");
+    
     _entities.clear();
     _effects.clear();
     
@@ -161,6 +163,7 @@ class Game{
     _level += 0.00007;
     if(_princesses == 0){
       _state = GameStatus.Gameover;
+      resources.play("gameover.mp3");
     }
     _vibratorX.update();
     _vibratorY.update();
