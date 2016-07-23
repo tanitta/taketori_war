@@ -388,7 +388,11 @@ Game game = new Game();
 
 void setup(){
   size(900, 900);
-  resources.minim = new Minim(this);
+  
+  try{
+    resources.minim = new Minim(this);
+  }catch(Exception e){}
+  
   game.setup();
 }
 

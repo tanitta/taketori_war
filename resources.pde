@@ -41,40 +41,50 @@ class Resources{
   private HashMap<String, PImage> _images = new HashMap<String, PImage>();
   
   void play(String name){
+    try{
     if(!_sounds.containsKey(name)){
       _sounds.put(name, minim.loadFile(name, 2048));
     }
-    _sounds.get(name).loop();
+      _sounds.get(name).loop();
+    }catch(Exception e){
+      
+    }
   }
   
   void close(String name){
+    try{
     if(!_sounds.containsKey(name)){
       _sounds.put(name, minim.loadFile(name, 2048));
     }
-    _sounds.get(name).close();
+      _sounds.get(name).close();
+    }catch(Exception e){
+      
+    }
   }
   
   void trigger(String name){
+    try{
     if(!_samples.containsKey(name)){
       _samples.put(name, minim.loadSample(name, 2048));
     }
-    _samples.get(name).trigger();
+      _samples.get(name).trigger();
+    }catch(Exception e){
+      
+    }
   }
-  // void play(String name){
-  //   if(!_sounds.containsKey(name)){
-  //     _sounds.put(name, minim.loadSample(name, 2048));
-  //   }
-  //   _sounds.get(name).play();
-  // }
   
   private HashMap<String, AudioSample> _samples = new HashMap<String, AudioSample>();
   private HashMap<String, AudioPlayer> _sounds = new HashMap<String, AudioPlayer>();
   
   void close(){
-    for (Map.Entry o : _sounds.entrySet()) {
-      _sounds.get(o.getKey()).close();
+    try{
+      for (Map.Entry o : _sounds.entrySet()) {
+        _sounds.get(o.getKey()).close();
+      }
+
+      minim.stop();
+    }catch(Exception e){
+
     }
-    
-    minim.stop();
   }
 }
