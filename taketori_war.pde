@@ -173,6 +173,7 @@ class Game{
     updateEffects();
     _level += 0.00007;
     if(_princesses == 0){
+      delay(1000);
       _state = GameStatus.Gameover;
       resources.play("gameover.mp3");
     }
@@ -197,8 +198,8 @@ class Game{
   }
   
   void addVibration(PVector f){
-    _vibratorX.addForce(f.x);
-    _vibratorY.addForce(f.y);
+    _vibratorX.addForce(f.x*5.0f);
+    _vibratorY.addForce(f.y*5.0f);
   }
 
   void drawOpening(){
