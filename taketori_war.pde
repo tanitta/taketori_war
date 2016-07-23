@@ -198,8 +198,8 @@ class Game{
   }
   
   void addVibration(PVector f){
-    _vibratorX.addForce(f.x*5.0f);
-    _vibratorY.addForce(f.y*5.0f);
+    _vibratorX.addForce(f.x*0.5f);
+    _vibratorY.addForce(f.y*0.5f);
   }
 
   void drawOpening(){
