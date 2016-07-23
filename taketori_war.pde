@@ -1,5 +1,6 @@
 enum GameStatus{
   Opening, 
+  Guide, 
   Playing, 
   Gameover, 
 }
@@ -69,6 +70,13 @@ class Game{
       drawOpening();
     }
     
+    if(_state == GameStatus.Guide){
+      pushMatrix();
+      translate(0, height/2);
+      resources.draw("guide.png");
+      popMatrix();
+    }
+    
     if(_state == GameStatus.Playing){
       drawPlaying();
       
@@ -124,10 +132,13 @@ class Game{
     if(_state == GameStatus.Playing){
       launchTakeyari();
     }
+    
     if(_state == GameStatus.Opening){
       resources.close("opening.mp3");
-      _state = GameStatus.Playing;
+      _state = GameStatus.Guide;
       resources.play("battle.mp3");
+    }else if(_state == GameStatus.Guide){
+      _state = GameStatus.Playing;
     }
     
     if(_state == GameStatus.Gameover){
