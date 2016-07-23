@@ -8,25 +8,16 @@ class Game{
   Game(){}
 
   void setup(){
+    _entities.clear();
+    _effects.clear();
+    
     _state = GameStatus.Opening;
     _openingAnimation = new Animation("opening");
-    
     _collisionDetector = new CollisionDetector();
 
     _moon   = new Moon();
     _earth  = new Earth();
     _player = new Player(_earth);
-    // _usagi= new Usagi();
-    
-    _entities.add(new Usagi(_moon.x()+random(-32f, 32f), _moon.y()+random(-32f, 32f)));
-    // _entities.add(new Usagi(_moon.x(), _moon.y()-100f));
-    // _entities.add(_moon.x(), _moon.y()-100f);
-    _entities.add(_moon);
-    _entities.add(_player);
-    
-    _takeyariRemaining = 20;
-    
-    spawnPrincess(0f);
     
     _vibratorX = new Vibrator();
     _vibratorX.mass = 0.01f;
@@ -37,16 +28,32 @@ class Game{
     _vibratorY.spring = 20f;
     _vibratorY.damper= 0.02f;
     
+    _takeyariRemaining = 20;
+    
+    _bonusSpawningTake = 0;
+    _bonusSpawningPrincess = 0;
+    _princesses = 0;
+    _level = 0;
+    _score = 0;
+    _timer = 0;
+    
+    //spawn
+    _entities.add(new Usagi(_moon.x()+random(-32f, 32f), _moon.y()+random(-32f, 32f)));
+    _entities.add(_moon);
+    _entities.add(_player);
+    
+    spawnPrincess(0f);
+    
     stroke(255, 0, 0);
     noFill();
     strokeWeight(2);
+    
     //sound
-    // resources.play("opening.mp3");
+    // resources.close("gameover.mp3");
     resources.play("opening.mp3");
   };
-
+  
   void update(){
-    
     if(_state == GameStatus.Playing){
       updatePlaying();
     }
@@ -78,6 +85,7 @@ class Game{
     }
     popMatrix();
   }
+  
   private void drawInfo(){
     drawScore();
 
@@ -118,6 +126,10 @@ class Game{
       resources.close("opening.mp3");
       _state = GameStatus.Playing;
       resources.play("battle.mp3");
+    }
+    
+    if(_state == GameStatus.Gameover){
+      setup();
     }
   };
   
@@ -368,19 +380,19 @@ class Game{
   private GameStatus _state;
   
   private int _takeyariRemaining;
-  private int _bonusSpawningTake = 0;
-  private int _bonusSpawningPrincess = 0;
+  private int _bonusSpawningTake;
+  private int _bonusSpawningPrincess;
   
-  private int _princesses = 0;
-  private float _level = 0;
+  private int _princesses;
+  private float _level;
 
   private Animation _openingAnimation;
   
   private Vibrator _vibratorX;
   private Vibrator _vibratorY;
   
-  private int _score = 0;
-  private long _timer = 0;
+  private int _score;
+  private long _timer;
 }
 
 Resources resources = new Resources();

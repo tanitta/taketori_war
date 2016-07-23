@@ -42,9 +42,9 @@ class Resources{
   
   void play(String name){
     try{
-    if(!_sounds.containsKey(name)){
-      _sounds.put(name, minim.loadFile(name, 2048));
-    }
+      if(!_sounds.containsKey(name)){
+        _sounds.put(name, minim.loadFile(name, 2048));
+      }
       _sounds.get(name).loop();
     }catch(Exception e){
       
@@ -83,6 +83,7 @@ class Resources{
       }
 
       minim.stop();
+      
     }catch(Exception e){
 
     }
