@@ -39,6 +39,7 @@ class Game{
     _level = 0;
     _score = 0;
     _timer = 0;
+    _kidnapTime = 0;
     
     //spawn
     _entities.add(new Usagi(_moon.x()+random(-32f, 32f), _moon.y()+random(-32f, 32f)));
@@ -53,7 +54,7 @@ class Game{
     
     //sound
     // resources.close("gameover.mp3");
-    resources.play("opening.mp3");
+    resources.loop("opening.mp3");
   };
   
   void update(){
@@ -88,10 +89,7 @@ class Game{
     
     if(_state == GameStatus.Gameover){
       drawGameover();
-      pushMatrix();
-      translate(width/2-16*8, 160);
-      drawScore();
-      popMatrix();
+      
     }
     popMatrix();
   }
@@ -136,13 +134,15 @@ class Game{
     if(_state == GameStatus.Opening){
       resources.close("opening.mp3");
       _state = GameStatus.Guide;
-      resources.play("battle.mp3");
+      resources.loop("battle.mp3");
     }else if(_state == GameStatus.Guide){
       _state = GameStatus.Playing;
     }
     
     if(_state == GameStatus.Gameover){
-      setup();
+      if(_kidnapTime>=150){
+         setup();
+      }
     }
   };
   
@@ -173,6 +173,7 @@ class Game{
     updateEffects();
     _level += 0.00007;
     if(_princesses == 0){
+      resources.close("battle.mp3");
       delay(1000);
       _state = GameStatus.Gameover;
       resources.play("gameover.mp3");
@@ -209,10 +210,34 @@ class Game{
     popMatrix();
   }
   void drawGameover(){
-    pushMatrix();
-    translate(0, height/2);
-    resources.draw("gameover.png");
-    popMatrix();
+    if(_kidnapTime>=150){
+      pushMatrix();
+      translate(0, height/2);
+      resources.draw("gameover.png");
+      popMatrix();
+      
+      pushMatrix();
+      translate(width/2-16*8, 160);
+      drawScore();
+      popMatrix(); 
+    }else{
+      _kidnapTime++;
+      pushMatrix();
+        
+        translate(0, height - (float(_kidnapTime)/150f)*height);
+        pushMatrix();
+          translate(0, 0);
+          resources.draw("usagi.png");
+        popMatrix();
+        
+        pushMatrix();
+          translate(0, 16);
+          resources.draw("princess.png");
+        popMatrix();
+      
+      popMatrix();
+    }
+
   }
   
   private void updatePlayer(){
@@ -408,6 +433,8 @@ class Game{
   
   private int _score;
   private long _timer;
+  
+  private int _kidnapTime;
 }
 
 Resources resources = new Resources();

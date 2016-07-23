@@ -40,7 +40,7 @@ class Resources{
   
   private HashMap<String, PImage> _images = new HashMap<String, PImage>();
   
-  void play(String name){
+  void loop(String name){
     try{
       if(!_sounds.containsKey(name)){
         _sounds.put(name, minim.loadFile(name, 2048));
@@ -50,13 +50,24 @@ class Resources{
       
     }
   }
+  void play(String name){
+    try{
+      if(!_sounds.containsKey(name)){
+        _sounds.put(name, minim.loadFile(name, 2048));
+      }
+      _sounds.get(name).play();
+    }catch(Exception e){
+      
+    }
+  }
   
   void close(String name){
     try{
-    if(!_sounds.containsKey(name)){
-      _sounds.put(name, minim.loadFile(name, 2048));
-    }
+      if(!_sounds.containsKey(name)){
+        _sounds.put(name, minim.loadFile(name, 2048));
+      }
       _sounds.get(name).close();
+      _sounds.remove(name);
     }catch(Exception e){
       
     }
